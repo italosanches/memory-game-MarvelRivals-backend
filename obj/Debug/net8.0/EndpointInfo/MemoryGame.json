@@ -1,0 +1,75 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "MemoryGame",
+    "version": "1.0"
+  },
+  "paths": {
+    "/getScores": {
+      "get": {
+        "tags": [
+          "MemoryGame"
+        ],
+        "operationId": "GetScores",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/addScore": {
+      "post": {
+        "tags": [
+          "MemoryGame"
+        ],
+        "operationId": "AddScore",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserScore"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserScore": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cardsQuantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gameTime": {
+            "type": "string",
+            "format": "date-span"
+          },
+          "gameDate": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
