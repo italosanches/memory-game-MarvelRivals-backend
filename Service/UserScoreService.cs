@@ -1,6 +1,8 @@
 ﻿using MemoryGame.Context;
 using MemoryGame.Entityes;
+using MemoryGame.Parameters;
 using MemoryGame.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace MemoryGame.Service
 {
@@ -24,9 +26,17 @@ namespace MemoryGame.Service
             }
         }
 
-        public Task<IEnumerable<UserScore>> GetScoreAsync()
+        public async Task<IEnumerable<UserScore>> GetScoreAsync(ScoreQueryParameters queryParameters)
         {
-            return _repository.GetAsync();
+            var query = await _repository.GetQueryable(query =>
+            {
+                if (queryParameters.CardsQuantities > 0) 
+                {
+                    query = query.Where(q => q.CardsQuantity == queryParameters.CardsQuantities);
+                }
+                return query.Take(10);
+            });
+            return await query.OrderBy(q => q.GameTime).ToListAsync(); ;
         }
     }
 }

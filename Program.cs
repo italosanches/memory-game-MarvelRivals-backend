@@ -1,8 +1,11 @@
 using MemoryGame.Context;
 using MemoryGame.Entityes;
+using MemoryGame.Parameters;
 using MemoryGame.Repository;
 using MemoryGame.Service;
+using MemoryGame.Parameters;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
@@ -38,9 +41,10 @@ app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 
-app.MapGet("/getScores", async (IUserScoreService userScoreService) =>
+app.MapGet("/getScores", async (IUserScoreService userScoreService, int cardsQuantityes) =>
 {
-    var scoreList = await userScoreService.GetScoreAsync();
+    ScoreQueryParameters scoreQuery = new ScoreQueryParameters(cardsQuantityes);
+    var scoreList = await userScoreService.GetScoreAsync(scoreQuery);
     return Results.Ok(scoreList);
 })
 .WithName("GetScores")

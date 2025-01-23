@@ -1,6 +1,9 @@
 ﻿using MemoryGame.Context;
 using MemoryGame.Entityes;
+using MemoryGame.Parameters;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq.Expressions;
 
 namespace MemoryGame.Repository
 {
@@ -11,9 +14,20 @@ namespace MemoryGame.Repository
         {
             _context = context;
         }
-        public async Task<IEnumerable<UserScore>> GetAsync()
+        public async Task<IEnumerable<UserScore>> GetAsyncQueryable(IQueryable<UserScore> queryable)
         {
-           return await  _context.UsersScore.OrderBy(x => x.Score).ToListAsync();
+            return await queryable.ToListAsync();
+        }
+
+        public async Task<IQueryable<UserScore>> GetQueryable(Func<IQueryable<UserScore>, IQueryable<UserScore>> queryBuilder = null)
+        {
+            IQueryable<UserScore> queryUserScore = _context.UsersScore;
+            if (queryBuilder != null)
+            {
+                queryUserScore = queryBuilder(queryUserScore);
+            }
+            return queryUserScore;
+
         }
 
         public async Task<UserScore> CreateAsync(UserScore userScore)
@@ -29,6 +43,5 @@ namespace MemoryGame.Repository
                throw new Exception($"Erro ao salvar pontuação. {ex.Message}");
             }
         }
-
     }
 }
