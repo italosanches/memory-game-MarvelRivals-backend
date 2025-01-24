@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MemoryGame.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250103160554_MigracaoInicial")]
-    partial class MigracaoInicial
+    [Migration("20250124000419_migrationInicial")]
+    partial class migrationInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace MemoryGame.Migrations
                         .HasColumnType("date");
 
                     b.Property<TimeSpan>("GameTime")
-                        .HasColumnType("time");
+                        .HasColumnType("time(7)");
 
                     b.Property<int>("Score")
                         .HasColumnType("int");

@@ -37,7 +37,7 @@ namespace MemoryGame.Migrations
                         .HasColumnType("date");
 
                     b.Property<TimeSpan>("GameTime")
-                        .HasColumnType("time");
+                        .HasColumnType("time(7)");
 
                     b.Property<int>("Score")
                         .HasColumnType("int");
