@@ -14,7 +14,7 @@ namespace MemoryGame.Context
         {
             modelBuilder.Entity<UserScore>(entity =>
             {
-                entity.Property(e => e.GameTime).HasColumnType("time(7)");
+                entity.Property(e => e.GameTime).HasColumnType("time(3)");
             });
         }
     }
