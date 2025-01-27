@@ -34,9 +34,9 @@ namespace MemoryGame.Service
                 {
                     query = query.Where(q => q.CardsQuantity == queryParameters.CardsQuantities);
                 }
-                return query.Take(10);
+                return query.OrderBy(q=> q.GameTime).Take(10);
             });
-            return await query.OrderBy(q => q.GameTime).ToListAsync(); ;
+            return await query.ToListAsync(); ;
         }
     }
 }
